@@ -1,4 +1,30 @@
-var canvas = document.getElementById('canvas');
-var c = canvas.getContext('2d');
-c.fillStyle = "red";
-c.fillRect(100,100,100,100);
+let x = 0;
+let y = 1;
+function draw() {
+    var canvas = document.getElementById('canvas');
+    var c = canvas.getContext('2d');
+    const points = [234, 2, 234, 10, 122, 10, 122, 26, 202, 26, 202, 42, 170, 42, 170, 106, 154, 106, 154, 154, 170, 154, 170, 138, 186, 138, 186, 170, 138, 170, 138, 202, 90, 202, 90, 234, 58, 234, 58, 250, 90, 250, 90, 266, 74, 266, 74, 330, 106, 330, 106, 362, 122, 362, 122, 378, 106, 378, 106, 394, 74, 394, 74, 410, 106, 410, 106, 426, 122, 426, 122, 410, 138, 410, 138, 426, 154, 426, 154, 394, 138, 394, 138, 378, 154, 378, 154, 362, 138, 362, 138, 346, 170, 346, 170, 394, 186, 394, 186, 298, 202, 298, 202, 314, 218, 314, 218, 330, 202, 330, 202, 346, 218, 346, 218, 362, 202, 362, 202, 378, 234, 378, 234, 362, 266, 362, 266, 410, 250, 410, 250, 394, 202, 394, 202, 426, 218, 426, 218, 442, 250, 442, 250, 426, 282, 426, 282, 442, 298, 442, 298, 474, 266, 474, 266, 458, 234, 458, 234, 474, 250, 474, 250, 482];
+
+
+    c.beginPath();
+    c.strokeStyle = "red";
+    c.moveTo(points[x], points[y]);
+    x = x + 2;
+    y = y + 2;
+    if (points[x - 2] < points[x]) {
+        c.moveTo(points[x-2],points[y-2]);
+        points[x - 2]++;
+        c.lineTo(points[x], points[y]);
+    } else if (points[x - 2] > points[x]) {
+        c.moveTo(points[x-2],points[y-2]);
+        points[x - 2]--;
+        c.lineTo(points[x], points[y]);
+    } else {
+        //c.lineTo(points[x], points[y]);
+    }
+
+    c.stroke();
+    c.closePath();
+
+}
+setInterval(draw, 200);

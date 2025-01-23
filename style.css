@@ -6,3 +6,14 @@ html,body{
     width: 100%;
     height: 100%;
 }
+#mazeholder{
+    position: relative;
+    width: auto;
+}
+#mazeholder > img{
+    display: block;
+}
+#canvas{
+    position: absolute;
+    z-index: 10;
+}
