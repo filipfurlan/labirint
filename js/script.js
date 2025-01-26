@@ -64,7 +64,61 @@ ctx.lineWidth = 2; // Set the line width
 ctx.strokeStyle = 'red'; // Set the color of the line
 
 // Start the animation
-animateDrawing();
+function reset() {
+  let i = points.length / 2 - 1; // Start from the last point
+
+  function eraseLine() {
+      if (i > 0) {
+          const x1 = points[i * 2];
+          const y1 = points[i * 2 + 1];
+          const x2 = points[(i - 1) * 2];
+          const y2 = points[(i - 1) * 2 + 1];
+          let step = steps;
+
+          // Gradually erase the line from (x1, y1) to (x2, y2)
+          function eraseSmoothLine() {
+              if (step >= 0) {
+                  const { x, y } = interpolate(x2, y2, x1, y1, steps - step);
+
+                  // Set the line's alpha transparency to fade out
+                  ctx.save();
+                  ctx.lineWidth = 2; // Match the original line width
+                  ctx.strokeStyle = 'red'; // Keep the original color
+                  ctx.globalAlpha = step / steps; // Gradually fade out the line (from opaque to transparent)
+                  ctx.globalCompositeOperation = 'destination-out';
+                  ctx.beginPath();
+                  ctx.moveTo(x1, y1);
+                  ctx.lineTo(x, y);
+                  ctx.stroke();
+                  ctx.restore();
+
+                  step--;
+                  requestAnimationFrame(eraseSmoothLine);
+              } else {
+                  i--;
+                  setTimeout(eraseLine, speed); // Move to the next segment after erasing this one
+              }
+          }
+
+          eraseSmoothLine();
+      } else {
+          // After all lines are erased, ensure the canvas is cleared
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+  }
+
+  eraseLine(); // Start the erasing process
+}
+
+
+
+
+
+
+
+
+
+
 
 // Function to control the speed (you can call this with new speed values)
 function setSpeed(newSpeed) {
