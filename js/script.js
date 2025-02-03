@@ -1,3 +1,4 @@
+
 const points = [234, 2, 234, 10, 122, 10, 122, 26, 202, 26, 202, 42, 170, 42, 170, 106, 154, 106, 154, 154, 170, 154, 170, 138, 186, 138, 186, 170, 138, 170, 138, 202, 90, 202, 90, 234, 58, 234, 58, 250, 90, 250, 90, 266, 74, 266, 74, 330, 106, 330, 106, 362, 122, 362, 122, 378, 106, 378, 106, 394, 74, 394, 74, 410, 106, 410, 106, 426, 122, 426, 122, 410, 138, 410, 138, 426, 154, 426, 154, 394, 138, 394, 138, 378, 154, 378, 154, 362, 138, 362, 138, 346, 170, 346, 170, 394, 186, 394, 186, 298, 202, 298, 202, 314, 218, 314, 218, 330, 202, 330, 202, 346, 218, 346, 218, 362, 202, 362, 202, 378, 234, 378, 234, 362, 266, 362, 266, 410, 250, 410, 250, 394, 202, 394, 202, 426, 218, 426, 218, 442, 250, 442, 250, 426, 282, 426, 282, 442, 298, 442, 298, 474, 266, 474, 266, 458, 234, 458, 234, 474, 250, 474, 250, 482];
 
 const canvas = document.getElementById('canvas');
@@ -69,22 +70,22 @@ function risibrisi() {
   gumb2.disabled = true;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   let i = 0;
-  let trailLength = 20;  // The length of the tail before it gets erased
-  const trail = [];  // Store previous positions to use for erasing
+  let trailLength = 20;  // dolžina repa prej kot začnemo za njim brisati
+  const trail = [];  // shramba za vse koordinate za brisanje
 
-  function brisi() {
+  async function brisi() {
     i++;
 
-    // Track the current position for the trail
+    // zapisovanje trenutnih koordinat
     trail.push({ x: currentX, y: currentY });
 
-    // Clear the trail behind the current position (after it exceeds the trail length)
+    //ko gremo čez dolzino repa zacne brisati za njim
     if (trail.length > trailLength) {
-      const tail = trail.shift();  // Remove the oldest position in the trail
-      ctx.clearRect(tail.x - 2, tail.y - 2, 6, 6);  // Clear a small rectangle around the tail
+      const tail = trail.shift();  // zbriše najstarejšo koordinato repa
+      ctx.clearRect(tail.x - 2, tail.y - 2, 6, 6);  //zbriše pravokotnik za repom
     }
 
-    // Begin the path to draw the new segment
+
     ctx.beginPath();
     ctx.strokeStyle = 'red';
     ctx.moveTo(currentX, currentY);
@@ -113,16 +114,21 @@ function risibrisi() {
         targetX = x[currentIndex];
         targetY = y[currentIndex];
       } else {
-        // Once the snake has reached the end, clear the remaining trail
+        if()
+        clearInterval(interval2);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        gumb.disabled = false;
+        gumb2.disabled = false;
+        // na koncu zbriše ostanek repa
+        /*console.log(trail.length);
         if (trail.length > 0) {
           const tail = trail.shift();
           ctx.clearRect(tail.x - 2, tail.y - 2, 6, 6);
-        } else {
-          clearInterval(interval2);  // Stop once the entire trail is erased
-          gumb.disabled = false;
-          gumb.disabled = false;
-          gumb2.disabled = false;
-        }
+          await delay(150);
+          clearInterval(interval2);
+          gumb.disabled=false;
+          gumb2.disabled=false;
+        } */
       }
     }
   }
@@ -130,5 +136,7 @@ function risibrisi() {
   const interval2 = setInterval(brisi, 10);
 }
 
-
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
