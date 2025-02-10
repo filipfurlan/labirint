@@ -12,7 +12,7 @@ let currentX = x[0];
 let currentY = y[0];
 let targetX = x[1];
 let targetY = y[1];
-const speed = 1;
+let speed = 1; //1,2,4,8
 let currentIndex = 1;
 function risi() {
   gumb.disabled = true;
@@ -70,7 +70,7 @@ function risibrisi() {
   gumb2.disabled = true;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   let i = 0;
-  let trailLength = 20;  // dolžina repa prej kot začnemo za njim brisati
+  let trailLength = 60;  // dolžina repa prej kot začnemo za njim brisati
   const trail = [];  // shramba za vse koordinate za brisanje
 
   async function brisi() {
@@ -114,11 +114,12 @@ function risibrisi() {
         targetX = x[currentIndex];
         targetY = y[currentIndex];
       } else {
-        if()
+        if(!(currentX != targetX && currentY != targetY)){
         clearInterval(interval2);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         gumb.disabled = false;
         gumb2.disabled = false;
+        }
         // na koncu zbriše ostanek repa
         /*console.log(trail.length);
         if (trail.length > 0) {
@@ -140,3 +141,8 @@ function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+var slider = document.getElementById("slider");
+function updateSpeed(){
+  console.log(slider.value);
+  speed =document.querySelector('#slider').value;
+}

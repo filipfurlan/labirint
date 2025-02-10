@@ -16,8 +16,18 @@
 
         <img src="img/maze.svg">
         <div id="gumbi">
-            <button id="gumb" onclick="risi()">Start</button>
-            <button id="gumb2" onclick="risibrisi()">Risibrisi</button>
+            <div id="buttonholder">
+                <button id="gumb" onclick="risi()">Start</button>
+                <button id="gumb2" onclick="risibrisi()">Risibrisi</button>  
+            </div>
+            <div id="slidecontainer">
+                <img src="img/turtle.svg">
+                <input type="range" min="1" max="4" value="1" id="slider" oninput="updateSpeed()">
+                
+                    <img src="img/zec.svg">
+                
+              </div>
+            
         </div>
         
     </div>
