@@ -5,32 +5,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Labirint</title>
+    <title>Podganski Labirint</title>
+    <link rel="icon" type="image/x-icon" href="img/cheese.png">
 </head>
 
 <body>
     <div class="image"></div>
-    <div id="mazeholder">
-        
-        <canvas width="484" height="484" id="canvas"></canvas>
+    <div id="container">
+        <div id="podgana"><img id="podganaslika" src="img/podgana.png" alt="podgana"></div>
+        <div id="mazeholder">
 
-        <img src="img/maze.svg">
-        <div id="gumbi">
-            <div id="buttonholder">
-                <button id="gumb" onclick="start()">Start</button>
-                <button id="gumb2" onclick="risibrisi()">Risibrisi</button>  
+            <canvas width="484" height="484" id="canvas"></canvas>
+
+            <img src="img/maze.svg">
+            <div id="gumbi">
+                <div><h2>Podganski labirint</h2>
+                    <div id="navodila">
+                        <p>Pomagaj podgani do sira!</p>
+                    </div>
+                </div>
+                <div id="utilHolder">
+                    <div id="buttonholder">
+                        <div id="topRow">
+                            <button id="slikamove" onclick="start(3)">Resi</button>
+                        </div>
+                        <div id="secondRow">
+                            <button id="gumb" onclick="start(1)">Risanje</button>
+                            <button id="gumb2" onclick="start(2)">Snake</button>
+                            <button id="buttonstop" onclick="stop()">Stop</button>
+                        </div>
+
+                    </div>
+                    <div id="slidecontainer">
+                        <img src="img/turtle.svg">
+                        <input type="range" min="1" max="4" step="any" value="1" id="slider" oninput="updateSpeed()">
+
+                        <img src="img/zec.svg">
+
+                    </div>
+                    <button id="butclear" onclick="pocisti()">Reset</button>
+                </div>
+
+                <div id="textd">
+                    <p>Made by: Filip Furlan 4. Rb</p>
+                </div>
+
             </div>
-            <div id="slidecontainer">
-                <img src="img/turtle.svg">
-                <input type="range" min="1" max="4" step="any" value="1" id="slider" oninput="updateSpeed()">
-                
-                    <img src="img/zec.svg">
-                
-              </div>
-            
+
         </div>
-        
+        <div id="sir"><img id="sigma" src="img/cheese.png" alt=""></div>
     </div>
+
 
 
 </body>
