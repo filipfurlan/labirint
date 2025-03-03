@@ -1,0 +1,4 @@
+ozadje dej nek gradient,
+naredi da podgana gre skozi pot in je sir(siri se spawna random po poti) na zacetku suha podgana na koncu debela
+spremeni barvo črt
+ime dej na: Podganja pot
