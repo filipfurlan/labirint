@@ -271,8 +271,10 @@ function pocisti() {
   i = 0;
   const sir = document.getElementById('sigma');
   const podgana = document.getElementById('podganaslika');
+  const podganaDiv = document.getElementById('podgana');
   sir.src = 'img/cheese.png'
   podgana.src = 'img/podgana.png'
+  podganaDiv.style.zIndex="1000";
   gumb.disabled = false;
   gumb2.disabled = false;
   gumb3.disabled = false;
