@@ -17,6 +17,7 @@ const gumb = document.getElementById('gumb');
 const gumb2 = document.getElementById('gumb2');
 const gumb3 = document.getElementById('slikamove');
 var slider = document.getElementById("slider");
+var food = [];
 
 let currentX = x[0];
 let currentY = y[0];
@@ -234,8 +235,8 @@ function start(kateri) {
     slider.disabled = true;
     const sir = document.getElementById('sigma');
     const podgana = document.getElementById('podganaslika');
-    sir.src = 'img/cheese.png';
-    podgana.src = 'img/podgana.png';
+    podgana.src = 'img/podganaSuha.png';
+    sir.style.visibility='hidden';
   }
   updateSpeed();
 }
@@ -272,39 +273,51 @@ function pocisti() {
   const sir = document.getElementById('sigma');
   const podgana = document.getElementById('podganaslika');
   const podganaDiv = document.getElementById('podgana');
-  sir.src = 'img/cheese.png'
-  podgana.src = 'img/podgana.png'
-  podganaDiv.style.zIndex="1000";
+  podgana.src = 'img/podganaSuha.png'
+  podganaDiv.style.visibility = "visible";
+  sir.style.visibility ='hidden';
   gumb.disabled = false;
   gumb2.disabled = false;
   gumb3.disabled = false;
   slider.disabled = false;
+  iterations=0;
 }
 
 
 const img = new Image();
 img.src = 'img/podganaRunSprite.png';
+
+const miniCheese = new Image();
+miniCheese.src = 'img/cheeseM.png'
+
 const spriteHeight = 11;
 const spriteWidth = 16;
 const frames = 8;
 var frame = 0;
 const framerate = 8;
 var frameCounter = 0;
-
-
+let iterations = 0;
+const tolerance = 0; // Allow some tolerance for collision, adjust as needed
+const audioQue = new Audio('audio/eating.mp3');
+audioQue.volume = 0.2;
 function slikaMaze() {
+  iterations++;
   je3 = true;
   gumb.disabled = true;
   gumb2.disabled = true;
   gumb3.disabled = true;
   slider.disabled = true;
-  podgana.style.zIndex="-1";
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  podgana.style.visibility = "hidden";
+  const clearPadding = 3; // Padding around the object to clear a bit more space
+  ctx.clearRect(currentX - spriteWidth / 2 - clearPadding, currentY - spriteHeight / 2 - clearPadding, spriteWidth + clearPadding * 2, spriteHeight + clearPadding * 2);
+
 
   ctx.beginPath();
   ctx.strokeStyle = 'red';
   ctx.moveTo(currentX, currentY);
-
+  if(iterations==1){
+    drawRandomImages();
+  }
   if (currentX < targetX) {
     if (currentX + speed >= targetX) {
       currentX = targetX
@@ -334,6 +347,21 @@ function slikaMaze() {
     }
   }
 
+  
+//pogej za collision
+  for (let i = 0; i < food.length; i++) {
+    const foodX = food[i].x;
+    const foodY = food[i].y;
+
+    if (Math.abs(currentX - foodX) <= tolerance && Math.abs(currentY - foodY) <= tolerance) {
+      audioQue.pause();
+      audioQue.currentTime = 0;
+      console.log("Collision with food at: X:" + foodX + " Y:" + foodY);
+      audioQue.play();
+      food.splice(i, 1);
+    }
+  }
+
   frameCounter++;
   if (frameCounter >= 60 / framerate) {
     frameCounter = 0;
@@ -342,6 +370,7 @@ function slikaMaze() {
   const frameX = (frame * spriteWidth) % img.width;
   const frameY = Math.floor((frame * spriteWidth) / img.width) * spriteHeight;
   ctx.drawImage(img, frameX, frameY, spriteWidth, spriteHeight, currentX - img.width / 2 + 30, currentY - img.height / 2 + 5, spriteWidth, spriteHeight);
+
 
 
   if (Math.abs(currentX - targetX) < speed && Math.abs(currentY - targetY) < speed) {
@@ -364,6 +393,7 @@ function slikaMaze() {
       frame = 0;
       frameCounter = 0;
       je3 = false;
+      iterations=0;
       replaceImage();
     }
   }
@@ -372,4 +402,21 @@ function slikaMaze() {
 function replaceImage() {
   const image = document.getElementById('sigma');
   image.src = 'img/podganaFinalReal.png'; // Replace with the path to your new image
+  image.style.visibility='visible';
+}
+
+
+function getRandomPoint() {
+  const randomIndex = Math.floor(Math.random() * (points.length / 2)) * 2; // Ensure we get pairs of X and Y
+  const x = points[randomIndex];
+  const y = points[randomIndex + 1];
+  return { x, y };
+}
+function drawRandomImages() {
+  for (let i = 0; i < 10; i++) {
+    const { x, y } = getRandomPoint();
+    ctx.drawImage(miniCheese, x - miniCheese.width/2, y- miniCheese.height/2, 16, 11); // Drawing the image at the random coordinates with size 20x20
+    console.log("X:"+x+" Y:"+y);
+    food.push({x,y});
+  }
 }
