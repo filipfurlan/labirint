@@ -36,7 +36,7 @@ function draw() {
   ctx.lineWidth = 3;
 
   ctx.beginPath();
-  ctx.strokeStyle = 'red';
+  ctx.strokeStyle = '#f9c02e';
   ctx.moveTo(currentX, currentY);
 
   const rectWidth = 10;  // Adjust this to your desired width
@@ -72,7 +72,7 @@ function draw() {
 
   }
 
-  ctx.fillStyle = 'red';
+  ctx.fillStyle = '#f9c02e';
   ctx.beginPath();
   ctx.rect(currentX - rectWidth / 2, currentY - rectHeight / 2, rectWidth, rectHeight);
   ctx.fill();
@@ -126,7 +126,7 @@ function brisi() {
 
 
   ctx.beginPath();
-  ctx.strokeStyle = 'red';
+  ctx.strokeStyle = '#f9c02e';
   ctx.moveTo(currentX, currentY);
 
 
@@ -161,7 +161,7 @@ function brisi() {
   }
 
 
-  ctx.fillStyle = 'red';
+  ctx.fillStyle = '#f9c02e';
   ctx.beginPath();
   ctx.rect(currentX - rectWidth / 2, currentY - rectHeight / 2, rectWidth, rectHeight);
   ctx.fill();
